@@ -1,5 +1,5 @@
 ===================
-Nombre Modulo
+Fields required
 ===================
 
 .. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -67,9 +67,7 @@ Contributors
 
 * `Calyx Servicios S.A. <http://www.calyxservicios.com.ar/>`_
   
-  * Jhone Mendez
-  * Federico Gregori
-  * Cristian Paradiso
+  * Guzman Georgina
 
 Maintainers
 ~~~~~~~~~~~
