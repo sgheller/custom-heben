@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <data>
         <record id="product_template_view_form" model="ir.ui.view">
@@ -6,10 +7,7 @@
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='categ_id']" position="after">
-                    <field name="country_id" string="Country"/>
-                </xpath>
-                <xpath expr="//field[@name='company_id']" position="after">
-                    <field name="maker_id" string="Maker"/>
+                    <field name="product_seasons_id" string="Seasons"/>
                 </xpath>
             </field>
         </record>
