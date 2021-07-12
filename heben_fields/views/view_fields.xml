@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='categ_id']" position="after">
                     <field name="country_id" string="Country"/>
-                    <field name="season_id" string="Season"/>
+                    <!-- <field name="season_id" string="Season"/> -->
                 </xpath>
                 <xpath expr="//field[@name='company_id']" position="after">
                     <field name="maker_id" string="Maker"/>
