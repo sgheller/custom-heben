@@ -12,7 +12,7 @@ class ProductSeasons(models.Model):
     "product.template", "product_seasons_id", string="Temporadas"
     )
     products_count = fields.Integer(
-        string="Number of products", compute="_compute_products_count"
+        string="Numero de productos", compute="_compute_products_count"
     )
 
     @api.depends("product_ids")

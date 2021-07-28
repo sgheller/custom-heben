@@ -123,7 +123,7 @@
         <field name="inherit_id" ref="product.product_template_form_view" />
         <field name="arch" type="xml">
             <field name="sale_ok" position="before">
-                <field name="product_seasons_id" placeholder="seasons" />
+                <field name="product_seasons_id" placeholder="Temporada" />
                 <div />
             </field>
         </field>
@@ -196,13 +196,13 @@
     </record>
 
     <menuitem
-        name="Product seasons"
+        name="Temporada"
         id="menu_product_seasons"
         action="action_product_seasons"
         parent="sale.prod_config_main"
     />
     <menuitem
-        name="Product seasons"
+        name="Temporada"
         id="menu_product_seasons_inventory"
         action="action_product_seasons"
         parent="stock.menu_product_in_config_stock"
