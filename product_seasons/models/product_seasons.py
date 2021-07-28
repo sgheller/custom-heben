@@ -6,10 +6,10 @@ class ProductSeasons(models.Model):
     _description = "Product Seasons"
     _order = "name"
 
-    name = fields.Char("Season Name", Required=True)
+    name = fields.Char("Nombre Temporada", Required=True)
     description = fields.Text(translate=True)
     product_ids = fields.One2many(
-    "product.template", "product_seasons_id", string="Season Products"
+    "product.template", "product_seasons_id", string="Temporadas"
     )
     products_count = fields.Integer(
         string="Number of products", compute="_compute_products_count"
