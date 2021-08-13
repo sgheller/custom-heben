@@ -14,7 +14,8 @@
     "data": [
         "views/product_season_view.xml",
         "views/product_template_view.xml",
-        "security/ir.model.access.csv"
+        "views/product_material_view.xml",
+        "security/ir.model.access.csv",
     ],
     "installable": True,
     "auto_install": False,
