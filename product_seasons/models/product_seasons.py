@@ -6,8 +6,8 @@ class ProductSeasons(models.Model):
     _description = "Product Seasons"
     _order = "name"
 
-    name = fields.Char("Nombre Temporada", Required=True)
-    description = fields.Text(translate=True)
+    name = fields.Char("Codigo Material", Required=True)
+    description = fields.Char("Nombre",translate=True)
     product_ids = fields.One2many(
     "product.template", "product_seasons_id", string="Temporadas"
     )
