@@ -15,6 +15,7 @@
         "views/product_season_view.xml",
         "views/product_template_view.xml",
         "views/product_material_view.xml",
+        "views/product_family_view.xml",
         "security/ir.model.access.csv",
     ],
     "installable": True,

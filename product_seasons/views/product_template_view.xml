@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='categ_id']" position="after">
                     <field name="product_material_id" string="Material" />
+                    <field name="product_family_id" string="Familia"/>
                     <field name="product_seasons_id" string="Temporada"/>
                 </xpath>
             </field>

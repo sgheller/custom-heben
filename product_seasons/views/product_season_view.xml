@@ -117,17 +117,6 @@
             </field>
         </field>
     </record>
-    <record id="product_template_form_seasons_add" model="ir.ui.view">
-        <field name="name">product.template.product.form</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_form_view" />
-        <field name="arch" type="xml">
-            <field name="sale_ok" position="before">
-                <field name="product_seasons_id" placeholder="Temporada" />
-                <div />
-            </field>
-        </field>
-    </record>
     <record id="view_product_template_kanban_seasons" model="ir.ui.view">
         <field name="name">product kanban view: add seasons</field>
         <field name="model">product.template</field>
