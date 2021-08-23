@@ -167,6 +167,16 @@
         </group>
      </field>
     </record>
+    <record id="view_product_variant_form_seasons_vv" model="ir.ui.view">
+     <field name="name">product variant form view: add seasons_vv</field>
+     <field name="model">product.product</field>
+     <field name="inherit_id" ref="product.product_normal_form_view" />
+     <field name="arch" type="xml">
+         <field name="default_code" position="after">
+             <field name="product_seasons_id" string="Temporada" />
+         </field>
+     </field>
+    </record>
     
     <record id="view_product_template_tree_seasons" model="ir.ui.view">
         <field name="name">product tree view: add seasons</field>

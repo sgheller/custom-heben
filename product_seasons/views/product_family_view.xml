@@ -4,7 +4,7 @@
         <field name="name">product.family.search.form</field>
         <field name="model">product.family</field>
         <field name="arch" type="xml">
-            <search string="family">
+            <search string="familia">
                 <field name="name" />
             </search>
         </field>
@@ -151,6 +151,16 @@
                 <field name="product_family_id" />
             </field>
         </field>
+    </record>
+    <record id="view_product_variant_form_family_vv" model="ir.ui.view">
+     <field name="name">product variant form view: add family_vv</field>
+     <field name="model">product.product</field>
+     <field name="inherit_id" ref="product.product_normal_form_view" />
+     <field name="arch" type="xml">
+         <field name="default_code" position="after">
+             <field name="product_family_id" string="Familia" />
+         </field>
+     </field>
     </record>
     <record id="view_product_variant_form_family" model="ir.ui.view">
      <field name="name">product variant form view: add family</field>
