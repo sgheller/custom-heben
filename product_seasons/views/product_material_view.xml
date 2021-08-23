@@ -170,10 +170,8 @@
      <field name="model">product.product</field>
      <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
      <field name="arch" type="xml">
-         <group name="codes" position="after">
-            <group name="heben_info" string="Informacion">
+         <group name="heben_info" position="inside">
              <field name="product_material_id"  />
-            </group>
          </group>
      </field>
     </record>
