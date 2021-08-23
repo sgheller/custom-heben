@@ -155,6 +155,16 @@
             </xpath>
         </field>
     </record>
+    <record id="view_product_variant_form_seasons" model="ir.ui.view">
+     <field name="name">product variant form view: add seasons</field>
+     <field name="model">product.product</field>
+     <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
+     <field name="arch" type="xml">
+         <group name="heben_info" position="inside">
+             <field name="product_seasons_id"  />
+         </group>
+     </field>
+    </record>
     
     <record id="view_product_template_tree_seasons" model="ir.ui.view">
         <field name="name">product tree view: add seasons</field>

@@ -10,13 +10,13 @@
         </field>
     </record>
     <record id="action_open_material_products" model="ir.actions.act_window">
-        <field name="name">Material Products</field>
+        <field name="name">Material Productos</field>
         <field name="res_model">product.template</field>
         <field name="view_mode">kanban,form,tree</field>
         <field name="domain">[('product_material_id', '=', active_id)]</field>
     </record>
     <record id="action_open_single_product_material" model="ir.actions.act_window">
-        <field name="name">Product Material</field>
+        <field name="name">Producto Material</field>
         <field name="res_model">product.material</field>
         <field name="view_mode">kanban,form,tree</field>
         <field name="target">current</field>
@@ -43,15 +43,11 @@
                             />
                         </button>
                     </div>
-                    <div class="oe_title">
-                        <label for="name" string="Codigo material" class="oe_edit_only" />
-                        <h1>
-                            <field name="name" />
-                        </h1>
-                    </div>
-
-                    <group string="Nombre Material">
-                        <field name="code_material" nolabel="1" />
+                    <group string="Codigo" style="color:black;">
+                        <field name="name" nolabel="1" class="col-6" />
+                    </group>
+                    <group string="Nombre" style="color:black;">
+                        <field name="code_material" nolabel="1" class="col-6" />
                     </group>
                 </sheet>
             </form>
@@ -169,9 +165,21 @@
             </field>
         </field>
     </record>
+    <record id="view_product_variant_form_material" model="ir.ui.view">
+     <field name="name">product variant form view: add material</field>
+     <field name="model">product.product</field>
+     <field name="inherit_id" ref="product.product_variant_easy_edit_view" />
+     <field name="arch" type="xml">
+         <group name="codes" position="after">
+            <group name="heben_info" string="Informacion">
+             <field name="product_material_id"  />
+            </group>
+         </group>
+     </field>
+    </record>
 
     <record model="ir.actions.act_window" id="action_product_material">
-        <field name="name">material</field>
+        <field name="name">Material</field>
         <field name="res_model">product.material</field>
         <field name="view_mode">kanban,form,tree</field>
     </record>
