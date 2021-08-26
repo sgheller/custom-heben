@@ -6,3 +6,4 @@ class ProductTemplate (models.Model):
     product_seasons_id = fields.Many2one(string="Temporada", comodel_name='product.seasons', help="Select a season for this product")
     product_material_id = fields.Many2one(string="Material", comodel_name='product.material', help="Select a material or this product")
     product_family_id = fields.Many2one(string="family", comodel_name='product.family', help="Select a family or this product")
+    
