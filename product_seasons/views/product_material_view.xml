@@ -43,12 +43,20 @@
                             />
                         </button>
                     </div>
-                    <group string="Codigo" style="color:black;">
-                        <field name="name" nolabel="1" class="col-6" />
-                    </group>
-                    <group string="Nombre" style="color:black;">
-                        <field name="code_material" nolabel="1" class="col-6" />
-                    </group>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" />
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <div class="row">
+                        <group string="Codigo">
+                            <field name="code" nolabel="1" class="col-6" />
+                        </group>
+                        <group string="Nombre">
+                            <field name="description" nolabel="1" class="col-6" />
+                        </group>
+                    </div>
                 </sheet>
             </form>
         </field>
@@ -59,7 +67,7 @@
         <field name="arch" type="xml">
             <tree string="product.material">
                 <field name="name" />
-                <field name="code_material" />
+                <field name="description" />
             </tree>
         </field>
     </record>
@@ -70,7 +78,7 @@
             <kanban>
                 <field name="id" />
                 <field name="products_count" />
-                <field name="code_material" />
+                <field name="description" />
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_global_click">

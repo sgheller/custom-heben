@@ -1,18 +1,22 @@
 from odoo import api, fields, models
-
+from odoo.exceptions import ValidationError
 
 class ProductSeasons(models.Model):
     _name = "product.seasons"
     _description = "Product Seasons"
     _order = "name"
 
-    name = fields.Char("Codigo Material", Required=True)
-    description = fields.Char("Nombre",translate=True)
+    name = fields.Char(compute="_compute_code_name")
+    code = fields.Char("Codigo Material")
+    description = fields.Char("Nombre",translate=True,)
     product_ids = fields.One2many(
-    "product.template", "product_seasons_id", string="Temporadas"
+        "product.template", 
+        "product_seasons_id",
+        "Temporadas",
     )
     products_count = fields.Integer(
-        string="Numero de productos", compute="_compute_products_count"
+        string="Numero de productos",
+        compute="_compute_products_count",
     )
 
     @api.depends("product_ids")
@@ -28,4 +32,17 @@ class ProductSeasons(models.Model):
         for seasons in self:
             seasons.products_count = data.get(seasons.id, 0)
 
+    @api.depends('code','description')
+    def _compute_code_name(self):
+        for rec in self:
+            if rec.code and rec.description:
+                rec.name = rec.code + ' ' + rec.description
+            elif rec.name and not rec.description:
+                rec.name = rec.code
+            elif rec.description and not rec.name:
+                rec.name = rec.description
+            else:
+                rec.name = ' '
+
+            
     logo = fields.Binary("Logo File")

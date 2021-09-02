@@ -5,8 +5,9 @@ class ProductMaterial(models.Model):
     _description = "Product Material"
     _order = "name"
 
-    name = fields.Char("Codigo Material", Required=True)
-    code_material= fields.Char("Nombre Material", Required=True)
+    name = fields.Char(compute="_compute_code_name")
+    code = fields.Char("Codigo Material")
+    description= fields.Char("Nombre", translate=True,)
     product_ids = fields.One2many(
     "product.template", "product_material_id", string="Material"
     )
@@ -26,3 +27,15 @@ class ProductMaterial(models.Model):
         data = {group["product_material_id"][0]: group["__count"] for group in groups}
         for material in self:
             material.products_count = data.get(material.id, 0)
+
+    @api.depends('code','description')
+    def _compute_code_name(self):
+        for rec in self:
+            if rec.code and rec.description:
+                rec.name = rec.code + ' ' + rec.description
+            elif rec.name and not rec.description:
+                rec.name = rec.code
+            elif rec.description and not rec.name:
+                rec.name = rec.description
+            else:
+                rec.name = ' '
