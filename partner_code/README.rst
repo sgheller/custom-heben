@@ -1,10 +1,9 @@
 ===================
-Product Information
+Partner Code
 ===================
 
 .. !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   !! this module is to be able to provide more      !!
-   !! information to the products                    !!
+   !! this module adds the partner code field        !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -26,9 +25,9 @@ Install
 =======
 
 # Go to applications
-# Find module "product_information"
+# Find module "partner_code"
 # Press Install
-# Go to sale > Product > and see the modifications
+# Go to contacts > Create > and see the modifications
 
 
 Known issues / Roadmap
@@ -54,7 +53,7 @@ Contributors
 
 * `Calyx Servicios S.A. <http://www.calyxservicios.com.ar/>`_
   
-  * Georgina Guzmán
+  * Andres Andrade
 
 Maintainers
 ~~~~~~~~~~~

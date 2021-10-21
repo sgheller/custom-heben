@@ -1,8 +1,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
-    "name": "Product Variants",
+    "name": "Partner Code",
     "summary": """
-            this module is to be able to provide more information to the products
+            this module adds the partner code field
         """,
     "author": "Calyx Servicios S.A.",
     "maintainers": [""],
