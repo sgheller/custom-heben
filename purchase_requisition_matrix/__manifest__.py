@@ -16,7 +16,7 @@
         'python': [],
         'bin': [],
     },
-    'depends': [],
+    'depends': ['purchase_requisition', 'purchase_stock'],
     'data': [
     ],
 }
