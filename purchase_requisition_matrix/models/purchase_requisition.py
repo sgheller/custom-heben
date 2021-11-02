@@ -1,5 +1,4 @@
 from odoo import fields, models, _
-
 class PurchaseRequisitionLine(models.Model):
     _inherit = "purchase.requisition.line"
 
