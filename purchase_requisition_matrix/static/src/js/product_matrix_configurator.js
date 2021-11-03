@@ -1,5 +1,5 @@
-odoo.define('sale_product_matrix.product_configurator', function (require) {
-var ProductConfiguratorWidget = require('sale_product_configurator.product_configurator');
+odoo.define('purchase_requisition_matrix.product_configurator', function (require) {
+var ProductConfiguratorWidget = require('purchase_requisition_matrix.product_configurator');
 
 /**
  * Extension of the ProductConfiguratorWidget to support product configuration
