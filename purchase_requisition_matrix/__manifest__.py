@@ -18,5 +18,6 @@
     },
     'depends': ['purchase_requisition', 'purchase_stock'],
     'data': [
+        'views/assets.xml',
     ],
 }
