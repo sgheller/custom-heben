@@ -52,7 +52,7 @@ class SaleOrder(models.Model):
 
                 # create or find product variant from combination
                 product = product_template._create_product_variant(combination)
-                order_lines = self.order_line.filtered(lambda line: (line._origin or line).product_id == product and (line._origin or line).product_no_variant_attribute_value_ids == no_variant_attribute_values)
+                order_lines = self.line_ids.filtered(lambda line: (line._origin or line).product_id == product and (line._origin or line).product_no_variant_attribute_value_ids == no_variant_attribute_values)
 
                 # if product variant already exist in order lines
                 old_qty = sum(order_lines.mapped('product_uom_qty'))
@@ -64,7 +64,7 @@ class SaleOrder(models.Model):
                         if self.state in ['draft', 'sent']:
                             # Remove lines if qty was set to 0 in matrix
                             # only if SO state = draft/sent
-                            self.order_line -= order_lines
+                            self.line_ids -= order_lines
                         else:
                             order_lines.update({'product_uom_qty': 0.0})
                     else:
@@ -91,9 +91,9 @@ class SaleOrder(models.Model):
                             #     self.order_line -= order_lines[1:]
                 elif diff and not order_lines:
                     if not default_so_line_vals:
-                        OrderLine = self.env['sale.order.line']
+                        OrderLine = self.env['purchase.requisition.line']
                         default_so_line_vals = OrderLine.default_get(OrderLine._fields.keys())
-                    last_sequence = self.order_line[-1:].sequence
+                    last_sequence = self.line_ids[-1:].sequence
                     if last_sequence:
                         default_so_line_vals['sequence'] = last_sequence
                     new_lines.append((0, 0, dict(
@@ -103,8 +103,8 @@ class SaleOrder(models.Model):
                         product_no_variant_attribute_value_ids=no_variant_attribute_values.ids)
                     ))
             if new_lines:
-                self.update(dict(order_line=new_lines))
-                for line in self.order_line.filtered(lambda line: line.product_template_id == product_template):
+                self.update(dict(line_ids=new_lines))
+                for line in self.line_ids.filtered(lambda line: line.product_template_id == product_template):
                     line.product_id_change()
                     line._onchange_discount()
                     line._onchange_product_id_set_customer_lead()
@@ -128,9 +128,9 @@ class SaleOrder(models.Model):
             company_id=self.company_id,
             currency_id=self.currency_id,
             display_extra_price=True)
-        if self.order_line:
+        if self.line_ids:
             lines = matrix['matrix']
-            order_lines = self.order_line.filtered(lambda line: line.product_template_id == product_template)
+            order_lines = self.line_ids.filtered(lambda line: line.product_template_id == product_template)
             for line in lines:
                 for cell in line:
                     if not cell.get('name', False):
@@ -149,9 +149,9 @@ class SaleOrder(models.Model):
         """
         matrixes = []
         if self.report_grids:
-            grid_configured_templates = self.order_line.filtered('is_configurable_product').product_template_id.filtered(lambda ptmpl: ptmpl.product_add_mode == 'matrix')
+            grid_configured_templates = self.line_ids.filtered('is_configurable_product').product_template_id.filtered(lambda ptmpl: ptmpl.product_add_mode == 'matrix')
             for template in grid_configured_templates:
-                if len(self.order_line.filtered(lambda line: line.product_template_id == template)) > 1:
+                if len(self.line_ids.filtered(lambda line: line.product_template_id == template)) > 1:
                     # TODO do we really want the whole matrix even if there isn't a lot of lines ??
                     matrixes.append(self._get_matrix(template))
         return matrixes
