@@ -6,11 +6,11 @@
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='categ_id']" position="after">
-                    <field name="discharge_date" readonly="True"/>
-                    <field name="first_entry_date" readonly="True"/>
-                    <field name="first_sale_date" readonly="True"/>
-                    <field name="last_entry_date" readonly="True"/>
-                    <field name="last_sale_date" readonly="True"/>
+                    <field name="discharge_date"/>
+                    <field name="first_entry_date"/>
+                    <field name="first_sale_date"/>
+                    <field name="last_entry_date"/>
+                    <field name="last_sale_date"/>
                 </xpath>
             </field>
         </record>

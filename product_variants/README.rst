@@ -27,7 +27,7 @@ Install
 # Go to applications
 # Find module "product_variants"
 # Press Install
-# Go to sale > Product > and see the modifications
+# Go to inventory > Products > Product Variants > and see the modifications.
 
 
 Known issues / Roadmap
