@@ -36,7 +36,7 @@ class ProductSeasons(models.Model):
     def _compute_code_name(self):
         for rec in self:
             if rec.code and rec.description:
-                rec.name = rec.code + ' ' + rec.description
+                rec.name = ("[%s] %s") % (rec.code, rec.description)
             elif rec.name and not rec.description:
                 rec.name = rec.code
             elif rec.description and not rec.name:

@@ -14,30 +14,36 @@
                         </h1>
                     </div>
                     <group>
-                        <group>
-                            <field name="family_id" options="{'no_open':True,'no_create':True}"/>
-                            <field name="partner_id" options="{'no_open':True,'no_create':True}" />
-                            <field name="separator" options="{'no_open':True,'no_create':True}" />
-                            <field name="product_id" options="{'no_open':True,'no_create':True}" />
-                        </group>
-                        <group>
-                            <field name="season_id" options="{'no_open':True,'no_create':True}" />
-                            <field name="material_id" options="{'no_open':True,'no_create':True}" />
-                            <label for ="color_id" options="{'no_open':True,'no_create':True}" />
-                            <div style="display: grid; grid-template-columns: 1fr 0.5fr; align-items: center;">
-                                <field name="color_id" class="oe_inline" options="{'no_open':True,'no_create':True}"/>
-                                <field name="color_view" widget="color" class="oe_inline" />
-                            </div>
-                            <field name="size_id" options="{'no_open':True,'no_create':True}"/>
-                        </group>
+                        <field name="sku" />
                     </group>
                     <group>
-                        <field name="sku" />
+                        <field name="code_list" nolabel="1">
+                           <tree editable="bottom" string="media" delete="true">
+                               <field name="sequence" widget="handle"/>
+                               <field name="name" string="name"/>
+                           </tree>
+                        </field>
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
+
+    <!-- <record id="view_product_categ_form_sku_vv" model="ir.ui.view">
+        <field name="name">product categ form view: add sku_vv</field>
+        <field name="model">product.sku</field>
+        <field name="inherit_id" ref="product.product_category_form_view" />
+        <field name="arch" type="xml">
+            <field name="parent_id" position="after">
+                <field name="code_list" nolabel="1">
+                   <tree editable="bottom" string="media" delete="true">
+                       <field name="sequence" widget="handle"/>
+                       <field name="name" string="name"/>
+                   </tree>
+                </field>
+            </field>
+        </field>
+    </record> -->
 
     <record id="view_product_sku_tree" model="ir.ui.view">
         <field name="name">product.sku.tree</field>
@@ -50,12 +56,25 @@
         </field>
     </record>
 
+    <record id="view_product_variant_form_sku_vv" model="ir.ui.view">
+        <field name="name">product variant form view: add sku_vv</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <field name="default_code" position="before">
+                <field name="product_sku_id" string="SKU" />
+                <field name="use_sku" />
+            </field>
+        </field>
+    </record>
+
     <record id="action_product_sku" model="ir.actions.act_window">
         <field name="name">SKU</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">product.sku</field>
         <field name="view_mode">tree,form</field>
     </record>
+
 
     <menuitem
     name="SKU"

@@ -6,50 +6,47 @@ class ProductAttribute(models.Model):
 
     display_type = fields.Selection(selection_add=[('talle','Talle')])
 
-
 class ProductSKU(models.Model):
     _name = "product.sku"
     _description = "Product SKU"
 
     name = fields.Char(string="Name", required=True)
 
-    # SKU creation fields
-    separator = fields.Selection([("-", "-")], string="Separator")
-    season_id = fields.Many2one(
-        comodel_name="product.seasons", string="Season", required=True
-    )
-    product_id = fields.Many2one(
-        comodel_name="product.product", string="Product", required=True
-    )
-    partner_id = fields.Many2one(
-        comodel_name="res.partner", string="Provider", required=True
-    )
-    family_id = fields.Many2one(
-        comodel_name="product.family", string="Family", required=True
-    )
-    material_id = fields.Many2one(
-        comodel_name="product.material", string="Material", required=True
-    )
-    color_id = fields.Many2one(
-        comodel_name="product.attribute.value",
-        string="Color",
-        domain=[("display_type","=", "color")],
-    )
-    color_view = fields.Char(related="color_id.html_color")
-    size_id = fields.Many2one(
-        comodel_name="product.attribute.value",
-        string="Size",
-        domain=[("display_type","=", "talle")],
-    )
-    
+    code_list = fields.Many2many('code.list')
     sku = fields.Char(string="SKU", compute="_compute_SKU")
 
     def _compute_SKU(self):
         for rec in self:
-            separator = rec.separator if rec.separator else ""
-            sku = f"{rec.family_id.code}{rec.partner_id.partner_code}{separator}{rec.product_id.internal_code}{rec.season_id.code}{rec.material_id.code}"
-            if rec.color_id:
-                sku += str(rec.color_id.code)
-                if rec.size_id:
-                    sku += str(rec.size_id.code)
-            rec.sku = sku
+            dictionary = {}
+            rec.sku = ''
+            i = 0
+            for code in rec.code_list:
+                if code.name == 'Codigo Familia':
+                    dictionary[code.sequence]=(self.env['product.family'].search([('id','>',0),('code','!=',False)], limit=1).code)
+                if code.name == 'Codigo Material':
+                    dictionary[code.sequence]=(self.env['product.material'].search([('id','>',0),('code','!=',False)], limit=1).code)
+                if code.name == 'Codigo Temporada':
+                    dictionary[code.sequence]=(self.env['product.seasons'].search([('id','>',0),('code','!=',False)], limit=1).code)
+                if code.name == 'Codigo Proveedor':
+                    dictionary[code.sequence]=(self.env['res.partner'].search([('id','>',0),('partner_code','!=',False)], limit=1).partner_code)
+                if code.name == 'Modelo':
+                    dictionary[code.sequence]=(self.env['product.product'].search([('id','>',0),('internal_code','!=',False)], limit=1).internal_code)
+                if code.name == 'Codigo Variante Color':
+                    dictionary[code.sequence]=(self.env['product.attribute.value'].search([('id','>',0),('code','!=',False),("display_type","=", "color")], limit=1).code)
+                if code.name == 'Codigo Variante Talle':
+                    dictionary[code.sequence]=(self.env['product.attribute.value'].search([('id','>',0),('code','!=',False),("display_type","=", "talle")], limit=1).code)
+                if code.name == 'Separador':
+                    dictionary[code.sequence]='-'
+                i += 1
+            if i != 0 :
+                lista = list(dictionary)
+                lista.sort()
+                for key in lista:
+                    rec.sku = rec.sku+dictionary.get(key)
+
+class CodeList(models.Model):
+    _name = "code.list"
+    _description = "Code List"
+
+    name = fields.Char('Name')
+    sequence = fields.Integer(string='Sequence')
