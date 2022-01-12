@@ -13,40 +13,38 @@ class ProductSKU(models.Model):
     name = fields.Char(string="Name", required=True)
 
     code_list = fields.Many2many('code.list')
-    sku = fields.Char(string="SKU", compute="_compute_SKU")
+    sku = fields.Char(string="SKU")
 
-    def _compute_SKU(self):
-        for rec in self:
-            dictionary = {}
-            rec.sku = ''
-            i = 0
-            for code in rec.code_list:
-                if code.name == 'Codigo Familia':
-                    dictionary[code.sequence]=(self.env['product.family'].search([('id','>',0),('code','!=',False)], limit=1).code)
-                if code.name == 'Codigo Material':
-                    dictionary[code.sequence]=(self.env['product.material'].search([('id','>',0),('code','!=',False)], limit=1).code)
-                if code.name == 'Codigo Temporada':
-                    dictionary[code.sequence]=(self.env['product.seasons'].search([('id','>',0),('code','!=',False)], limit=1).code)
-                if code.name == 'Codigo Proveedor':
-                    dictionary[code.sequence]=(self.env['res.partner'].search([('id','>',0),('partner_code','!=',False)], limit=1).partner_code)
-                if code.name == 'Modelo':
-                    dictionary[code.sequence]=(self.env['product.product'].search([('id','>',0),('internal_code','!=',False)], limit=1).internal_code)
-                if code.name == 'Codigo Variante Color':
-                    dictionary[code.sequence]=(self.env['product.attribute.value'].search([('id','>',0),('code','!=',False),("display_type","=", "color")], limit=1).code)
-                if code.name == 'Codigo Variante Talle':
-                    dictionary[code.sequence]=(self.env['product.attribute.value'].search([('id','>',0),('code','!=',False),("display_type","=", "talle")], limit=1).code)
-                if code.name == 'Separador':
-                    dictionary[code.sequence]='-'
-                i += 1
-            if i != 0 :
-                lista = list(dictionary)
-                lista.sort()
-                for key in lista:
-                    rec.sku = rec.sku+dictionary.get(key)
+    def write(self, vals):
+        res = super(ProductSKU, self).write(vals)
+        if 'code_list' in vals:
+            sku_name = ''
+            for rule in self.code_list:
+                sku_name += '[%s]' % rule.rule.name
+            self.sku = sku_name
+        return res
+
+    @api.model_create_multi
+    def create(self, vals):
+        res = super(ProductSKU, self).create(vals)
+        # import wdb
+        # wdb.set_trace()
+        sku_name = ''
+        for rule in res.code_list:
+            sku_name += '[%s]' % rule.rule.name
+        res.sku = sku_name
+
+        return res
 
 class CodeList(models.Model):
     _name = "code.list"
     _description = "Code List"
 
-    name = fields.Char('Name')
+    rule = fields.Many2one('rule.sku', 'Rule Sku')
     sequence = fields.Integer(string='Sequence')
+
+class RuleSku(models.Model):
+    _name = "rule.sku"
+
+    name  = fields.Char('Name')
+    model = fields.Char('Model')
