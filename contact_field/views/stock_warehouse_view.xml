@@ -3,7 +3,7 @@
         <record id="stock_warehouse_form_inherit" model="ir.ui.view">
             <field name="name">stock.warehouse.form.view</field>
             <field name="model">stock.warehouse</field>
-            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="inherit_id" ref="stock.view_warehouse"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="before">
                     <field name="contact" string="Contact"/>
