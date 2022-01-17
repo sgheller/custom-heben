@@ -15,7 +15,7 @@
     "installable": True,
     "external_dependencies": {"python": [], "bin": []},
     # "depends": ['product', 'base','account_reports'],
-    "depends": ['product', 'base'],
+    "depends": ['product', 'base', 'stock'],
     "data": [
         'views/stock_warehouse_view.xml',
     ],
