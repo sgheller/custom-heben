@@ -15,6 +15,7 @@
         "views/product_sku_view.xml",
         "views/product_attribute_value.xml",
         "security/ir.model.access.csv",
+        "data/data.xml",
     ],
     "installable": True,
     "auto_install": False,

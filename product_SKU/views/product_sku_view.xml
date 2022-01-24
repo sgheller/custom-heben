@@ -29,21 +29,6 @@
         </field>
     </record>
 
-    <!-- <record id="view_product_categ_form_sku_vv" model="ir.ui.view">
-        <field name="name">product categ form view: add sku_vv</field>
-        <field name="model">product.sku</field>
-        <field name="inherit_id" ref="product.product_category_form_view" />
-        <field name="arch" type="xml">
-            <field name="parent_id" position="after">
-                <field name="code_list" nolabel="1">
-                   <tree editable="bottom" string="media" delete="true">
-                       <field name="sequence" widget="handle"/>
-                       <field name="name" string="name"/>
-                   </tree>
-                </field>
-            </field>
-        </field>
-    </record> -->
 
     <record id="view_product_sku_tree" model="ir.ui.view">
         <field name="name">product.sku.tree</field>
@@ -62,7 +47,7 @@
         <field name="inherit_id" ref="product.product_normal_form_view" />
         <field name="arch" type="xml">
             <field name="default_code" position="before">
-                <field name="product_sku_id" string="SKU" />
+                <field name="product_sku_id" string="SKU" attrs="{'invisible': [('use_sku', '=', False)]}"/>
                 <field name="use_sku" />
             </field>
         </field>
@@ -99,4 +84,3 @@
     />
 
 </odoo>
-

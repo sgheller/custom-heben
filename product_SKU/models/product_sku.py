@@ -27,8 +27,6 @@ class ProductSKU(models.Model):
     @api.model_create_multi
     def create(self, vals):
         res = super(ProductSKU, self).create(vals)
-        # import wdb
-        # wdb.set_trace()
         sku_name = ''
         for rule in res.code_list:
             sku_name += '[%s]' % rule.rule.name
@@ -47,4 +45,6 @@ class RuleSku(models.Model):
     _name = "rule.sku"
 
     name  = fields.Char('Name')
-    model = fields.Char('Model')
+    field_require_rule = fields.Char('Field Require Rule')
+    is_talle = fields.Boolean('Es Talle')
+    is_color = fields.Boolean('Es Color')
