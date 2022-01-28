@@ -19,4 +19,7 @@
         "views/point_of_sale.xml",
         "views/pos_config.xml",
     ],
+    'qweb': [
+        'static/src/xml/pos.xml',
+    ],
 }
