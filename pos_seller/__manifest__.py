@@ -16,7 +16,7 @@
     "external_dependencies": {"python": [], "bin": []},
     "depends": ['point_of_sale'],
     "data": [
+        "views/point_of_sale.xml",
         "views/pos_config.xml",
-        "views/pos.xml",
     ],
 }
