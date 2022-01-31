@@ -3,7 +3,8 @@ var screens = require('point_of_sale.screens');
 var gui = require('point_of_sale.gui');
 var PopupWidget = require('point_of_sale.popups');
 var models = require('point_of_sale.models');
-var rpc = require('web.rpc');
+var core = require('web.core');
+var _t = core._t;
 
 models.load_fields('pos.config', ['module_pos_seller', 'seller_ids']);
 
@@ -13,6 +14,7 @@ models.load_models([{
     domain: function(self){ return [['company_id', '=', self.config.company_id[0]]]; },
     loaded: function(self, sellers) {
         if (self.config.module_pos_seller) {
+        	self.seller = false;
             if (self.config.seller_ids.length > 0) {
                 self.sellers = sellers.filter(function(seller) {
                     return self.config.seller_ids.includes(seller.id) || seller.user_id[0] === self.user.id;
@@ -36,7 +38,6 @@ models.load_models([{
     }
 }]);
 
-//Modifico la pantalla de pago
 screens.ProductScreenWidget.include({
     show: function(reset){
     	var self = this;
@@ -44,8 +45,13 @@ screens.ProductScreenWidget.include({
         let body_seller = "<div class='div-seller'>" +
         	"<button class='set-seller'>" +
         	"<i class='fa fa-id-card icon-seller' role='img' aria-label='Vendedor' title='Vendedor' ></i>" +
-        	"Vendedor </button></div>"
-        $('.actionpad').before(body_seller);
+        	"<span class='ml-seller'>Vendedor</span></button></div>"
+        if ($("div.div-seller").length == 0){        	
+        	$('.actionpad').before(body_seller);
+        }
+        if (self.pos.seller != false) {
+        	$('button.set-seller span').text(self.pos.seller['name']);
+        }
         
         this.$('.set-seller').click(function(){
             self.gui.show_popup('sellers', {
@@ -74,15 +80,46 @@ var SellersPopupWidget = PopupWidget.extend({
 			if (options.module_pos_seller == true){
 				options.sellers.forEach(function (seller){
 					if (seller['role'] == 'seller'){
-						//self.$el.find("#selectPopupSellers").append('<option value="' + seller['id'] + '">' + seller['name'] + '</option>');
-						self.$el.find(".seller-list-contents").append('<tr><td>'+ seller['name']+ '</td></tr>');
+						self.$el.find(".seller-list").append("<li><input type='radio' name='sellers' value='" + seller['id'] + "'><span>"+ seller['name']+ "</span></li>");
 					}
 				})
+				if(self.pos.seller != false){
+					var seller_id = self.pos.seller['id'];
+					self.$el.find("input[value=" + seller_id + "]").attr('checked','checked');
+				}
 			}
         }
     	
         self.$el.find('#btn-accept').click(function(){
-        	self.gui.close_popup();   
+        	var seller_id = false;
+        	$.each($('input[name=sellers]'), function(){
+        		if ($(this).is(":checked")){        			
+        			seller_id = $(this).val();
+        		}
+        	})
+    		
+    		options.sellers.forEach(function (seller){
+    			if (seller_id != false) {    				
+    				if (seller['id'] == seller_id){
+    					self.pos.seller = seller;
+    					options.obj.show();
+    					self.gui.close_popup();
+    				}
+    			} else {
+    				self.gui.show_popup('confirm',{
+    	                'title': _t('Please select the seller'),
+    	                'body': _t('You need to select the seller before you can invoice an order.'),
+    	                confirm: function(){
+    	                    self.gui.show_popup('sellers', {
+    	                    	'module_pos_seller': options.module_pos_seller,
+    	                    	'sellers': options.sellers,
+    	                		'obj': self,
+    	                		'auto_close': false
+    	                    })
+    	                }
+    				})
+    			}
+    		})
     	})
     }
 });
