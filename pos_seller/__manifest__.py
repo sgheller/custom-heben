@@ -9,13 +9,17 @@
     "website": "http://odoo.calyx-cloud.com.ar/",
     "license": "AGPL-3",
     "category": "Custom",
-    "version": "13.0.1.1.0",
+    "version": "13.0.2.1.0",
     "development_status": "Production/Stable",
     "application": False,
     "installable": True,
     "external_dependencies": {"python": [], "bin": []},
     "depends": ['point_of_sale'],
     "data": [
+        "views/point_of_sale.xml",
         "views/pos_config.xml",
+    ],
+    'qweb': [
+        'static/src/xml/pos.xml',
     ],
 }
