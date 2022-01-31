@@ -9,7 +9,7 @@
     "website": "http://odoo.calyx-cloud.com.ar/",
     "license": "AGPL-3",
     "category": "Custom",
-    "version": "13.0.2.1.0",
+    "version": "13.0.3.1.0",
     "development_status": "Production/Stable",
     "application": False,
     "installable": True,
@@ -18,6 +18,8 @@
     "data": [
         "views/point_of_sale.xml",
         "views/pos_config.xml",
+        "views/pos_order_view.xml",
+        "views/pos_order_report_view.xml",
     ],
     'qweb': [
         'static/src/xml/pos.xml',
