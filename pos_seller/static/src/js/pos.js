@@ -42,74 +42,74 @@ models.load_models([{
 
 var _super_Order = models.Order.prototype;
 models.Order = models.Order.extend({
-	init_from_JSON: function(json) {
-        var client;
-        if (json.pos_session_id !== this.pos.pos_session.id) {
-            this.sequence_number = this.pos.pos_session.sequence_number++;
-        } else {
-            this.sequence_number = json.sequence_number;
-            this.pos.pos_session.sequence_number = Math.max(this.sequence_number+1,this.pos.pos_session.sequence_number);
-        }
-        this.session_id = this.pos.pos_session.id;
-        this.uid = json.uid;
-        this.name = _.str.sprintf(_t("Order %s"), this.uid);
-        this.validation_date = json.creation_date;
-        this.server_id = json.server_id ? json.server_id : false;
-        this.user_id = json.user_id;
-
-        if (json.fiscal_position_id) {
-            var fiscal_position = _.find(this.pos.fiscal_positions, function (fp) {
-                return fp.id === json.fiscal_position_id;
-            });
-
-            if (fiscal_position) {
-                this.fiscal_position = fiscal_position;
-            } else {
-                console.error('ERROR: trying to load a fiscal position not available in the pos');
-            }
-        }
-
-        if (json.pricelist_id) {
-            this.pricelist = _.find(this.pos.pricelists, function (pricelist) {
-                return pricelist.id === json.pricelist_id;
-            });
-        } else {
-            this.pricelist = this.pos.default_pricelist;
-        }
-
-        if (json.partner_id) {
-            client = this.pos.db.get_partner_by_id(json.partner_id);
-            if (!client) {
-                console.error('ERROR: trying to load a partner not available in the pos');
-            }
-        } else {
-            client = null;
-        }
-        this.set_client(client);
-
-        this.seller_id = false;
-        this.pos.seller = false;
-        
-        this.temporary = false;     // FIXME
-        this.to_invoice = false;    // FIXME
-
-        var orderlines = json.lines;
-        for (var i = 0; i < orderlines.length; i++) {
-            var orderline = orderlines[i][2];
-            this.add_orderline(new exports.Orderline({}, {pos: this.pos, order: this, json: orderline}));
-        }
-
-        var paymentlines = json.statement_ids;
-        for (var i = 0; i < paymentlines.length; i++) {
-            var paymentline = paymentlines[i][2];
-            var newpaymentline = new exports.Paymentline({},{pos: this.pos, order: this, json: paymentline});
-            this.paymentlines.add(newpaymentline);
-
-            if (i === paymentlines.length - 1) {
-                this.select_paymentline(newpaymentline);
-            }
-        }
-    },
+//	init_from_JSON: function(json) {
+//        var client;
+//        if (json.pos_session_id !== this.pos.pos_session.id) {
+//            this.sequence_number = this.pos.pos_session.sequence_number++;
+//        } else {
+//            this.sequence_number = json.sequence_number;
+//            this.pos.pos_session.sequence_number = Math.max(this.sequence_number+1,this.pos.pos_session.sequence_number);
+//        }
+//        this.session_id = this.pos.pos_session.id;
+//        this.uid = json.uid;
+//        this.name = _.str.sprintf(_t("Order %s"), this.uid);
+//        this.validation_date = json.creation_date;
+//        this.server_id = json.server_id ? json.server_id : false;
+//        this.user_id = json.user_id;
+//
+//        if (json.fiscal_position_id) {
+//            var fiscal_position = _.find(this.pos.fiscal_positions, function (fp) {
+//                return fp.id === json.fiscal_position_id;
+//            });
+//
+//            if (fiscal_position) {
+//                this.fiscal_position = fiscal_position;
+//            } else {
+//                console.error('ERROR: trying to load a fiscal position not available in the pos');
+//            }
+//        }
+//
+//        if (json.pricelist_id) {
+//            this.pricelist = _.find(this.pos.pricelists, function (pricelist) {
+//                return pricelist.id === json.pricelist_id;
+//            });
+//        } else {
+//            this.pricelist = this.pos.default_pricelist;
+//        }
+//
+//        if (json.partner_id) {
+//            client = this.pos.db.get_partner_by_id(json.partner_id);
+//            if (!client) {
+//                console.error('ERROR: trying to load a partner not available in the pos');
+//            }
+//        } else {
+//            client = null;
+//        }
+//        this.set_client(client);
+//
+//        this.seller_id = false;
+//        this.pos.seller = false;
+//        
+//        this.temporary = false;     // FIXME
+//        this.to_invoice = false;    // FIXME
+//
+//        var orderlines = json.lines;
+//        for (var i = 0; i < orderlines.length; i++) {
+//            var orderline = orderlines[i][2];
+//            this.add_orderline(new exports.Orderline({}, {pos: this.pos, order: this, json: orderline}));
+//        }
+//
+//        var paymentlines = json.statement_ids;
+//        for (var i = 0; i < paymentlines.length; i++) {
+//            var paymentline = paymentlines[i][2];
+//            var newpaymentline = new exports.Paymentline({},{pos: this.pos, order: this, json: paymentline});
+//            this.paymentlines.add(newpaymentline);
+//
+//            if (i === paymentlines.length - 1) {
+//                this.select_paymentline(newpaymentline);
+//            }
+//        }
+//    },
     export_as_JSON: function() {
         var orderLines, paymentLines;
         orderLines = [];
