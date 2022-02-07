@@ -52,6 +52,11 @@ models.Order = models.Order.extend({
     	json_extend['seller_id'] = this.seller_id;
         return json_extend;
     },
+    destroy: function() {
+    	this.seller_id = false;
+        this.pos.seller = false;
+        _super_Order.destroy.apply(this,arguments);
+    },
 });
 
 screens.ActionpadWidget.include({
